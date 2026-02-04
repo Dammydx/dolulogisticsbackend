@@ -62,7 +62,6 @@ const HeroSection = () => {
               className="w-full h-auto rounded-lg"
               loading="eager"
             />
-
             </motion.div>
           </motion.div>
 

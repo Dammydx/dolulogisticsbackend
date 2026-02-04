@@ -94,7 +94,7 @@ const AdminLogin = () => {
           </form>
           
           <div className="mt-6 text-center">
-            <a href="https://dammydx.github.io/SwiftHaul" className="text-sm text-primary-500 hover:text-primary-600 transition-colors">
+            <a href="https://dammydx.github.io/DoluLogistics" className="text-sm text-primary-500 hover:text-primary-600 transition-colors">
               Back to Homepage
             </a>
           </div>

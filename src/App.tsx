@@ -23,7 +23,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
-    <Router>{/* basename="/DevWave"👈 update this to match your repo name */}
+    <Router basename="/DoluLogistics">{/* basename="/DevWave"👈 update this to match your repo name */}
       <ScrollToTop />
       <ToastContainer position="top-right" autoClose={5000} />
       <Routes>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { supabase } from '../../lib/supabase';
 import {
@@ -11,16 +11,14 @@ import {
   X,
   Eye,
   CheckCircle,
-  Truck,
   Phone,
-  Mail,
   MapPin,
   Package as PackageIcon,
   History,
   Send,
   User,
 } from 'lucide-react';
-import { toast } from 'react-toastify';
+
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -52,29 +50,7 @@ const AdminBookings = () => {
     fetchBookings();
   }, []);
 
-  useEffect(() => {
-    filterBookings();
-  }, [bookings, selectedStatus, searchTerm]);
-
-  const fetchBookings = async () => {
-    try {
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from('bookings')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setBookings(data || []);
-    } catch (err) {
-      console.error('Error fetching bookings:', err);
-      toast.error('Failed to load bookings');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const filterBookings = () => {
+  const filterBookings = useCallback(() => {
     let filtered = bookings;
 
     // Filter by status
@@ -94,7 +70,31 @@ const AdminBookings = () => {
     }
 
     setFilteredBookings(filtered);
+  }, [bookings, selectedStatus, searchTerm]);
+
+  useEffect(() => {
+    filterBookings();
+  }, [filterBookings]);
+
+  const fetchBookings = async () => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setBookings(data || []);
+    } catch (err) {
+      console.error('Error fetching bookings:', err);
+      toast.error('Failed to load bookings');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+
 
   const fetchBookingHistory = async (bookingId: string) => {
     try {
